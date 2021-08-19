@@ -3,10 +3,11 @@ use std::net::TcpStream;
 use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::Duration;
+use std::env;
 
 
 const LOCAL: &str = "127.0.0.1:6000";
-const MSG_DIM: usize = 32;
+const MSG_DIM: usize = 512;
 
 // pause the current thread
 fn sleep() {
@@ -14,6 +15,11 @@ fn sleep() {
 }
 
 fn main() {
+    // get user name from cli
+    let args: Vec<String> = env::args().collect();
+    let user_name = &args[1];
+    println!("User name: {}", user_name);
+
     // Initialize socket stream and put it run in the background
     let mut client = TcpStream::connect(LOCAL)
         .expect("Stream failed to connect");
@@ -80,9 +86,13 @@ fn main() {
             .expect("Failed to read from stdin");
 
         // convert our buffer into a message
-        let msg = buffer.trim().to_string();
+        let msg_content = buffer.trim().to_string();
+        let mut msg = user_name.to_string();
+        msg.push_str(": ");
+        msg.push_str(&msg_content);
+
         // and try to send it to our sever (or exit at user's demand)
-        if msg == ":quit" || msg == ":q" || sender.send(msg).is_err() {break}
+        if msg.contains(":quit") || msg.contains(":q") || sender.send(msg).is_err() {break}
     }
     println!("Bye bye!");
 }

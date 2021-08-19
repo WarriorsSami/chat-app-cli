@@ -6,7 +6,7 @@ use std::time::Duration;
 
 
 const LOCAL: &str = "127.0.0.1:6000";
-const MSG_DIM: usize = 32;
+const MSG_DIM: usize = 512;
 
 // pause the current thread
 fn sleep() {
