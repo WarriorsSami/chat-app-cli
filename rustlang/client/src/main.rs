@@ -3,7 +3,6 @@ use std::net::TcpStream;
 use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::Duration;
-use std::borrow::Borrow;
 
 
 const LOCAL: &str = "127.0.0.1:6000";
@@ -31,7 +30,7 @@ fn main() {
         // read the client message inside our buffer
         match client.read_exact(&mut buffer) {
             Ok(_) => {
-                let msg = buffer.into_iter().take_while(|x| x != 0)
+                let msg = buffer.into_iter().take_while(|&x| x != 0)
                     .collect::<Vec<_>>();
                 println!("The received message is {:?}", msg);
             },
@@ -70,7 +69,7 @@ fn main() {
     });
 
     // Add interactivity support for users
-    println!("Write a message");
+    println!("Write a message:");
     loop {
         // read messages from stdin to buffer
         let mut buffer = String::new();
