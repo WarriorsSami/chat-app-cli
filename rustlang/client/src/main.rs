@@ -91,7 +91,7 @@ fn main() {
         msg.push_str(": ");
         msg.push_str(&msg_content);
 
-        // and try to send it to our sever (or exit at user's demand)
+        // and try to send it to our server (or exit at user's demand)
         if msg.contains(":quit") || msg.contains(":q") || sender.send(msg).is_err() {break}
     }
     println!("Bye bye!");
