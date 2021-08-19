@@ -7,6 +7,10 @@ use std::thread;
 const LOCAL: &str = "127.0.0.1:6000";
 const MSG_DIM: usize = 32;
 
+fn sleep() {
+    thread::sleep(::std::time::Duration::from_millis(100));
+}
+
 fn main() {
     // initialize socket listener and put it run in the background
     let server = TcpListener::bind(LOCAL)
@@ -20,7 +24,8 @@ fn main() {
 
     // listen to possible connections established by clients
     loop {
-        if let OK((mut socket, addr)) = server.accept() {
+        // sender logic
+        if let Ok((mut socket, addr)) = server.accept() {
             println!("Client {} has connected", addr);
 
             // store the client's reference
@@ -34,7 +39,7 @@ fn main() {
 
                 // read message inside the buffer
                 match socket.read_exact(&mut buffer) {
-                    OK(_) => {
+                    Ok(_) => {
                         // read message as a byte array
                         let msg = buffer.into_iter().take_while(|&x| x != 0)
                             .collect::<Vec<_>>();
@@ -57,7 +62,28 @@ fn main() {
                         break;
                     }
                 }
-            })
+
+                // pause thread while being inactive
+                sleep();
+            });
         }
+
+        // receiver logic
+        if let Ok(msg) = receiver.try_recv() {
+            // collect messages received from our clients:
+            // extract a client
+            clients = clients.into_iter().filter_map(|mut client| {
+                // store the current message into the buffer as a byte array
+                let mut buffer = msg.clone().into_bytes();
+                // complete those remained characters up to MSG_DIM with zeros
+                buffer.resize(MSG_DIM, 0);
+
+                // write message to a client instance
+                client.write_all(&buffer).map(|_| client).ok()
+            }).collect::<Vec<_>>();
+        }
+
+        // pause thread while being inactive
+        sleep();
     }
 }
