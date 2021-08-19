@@ -51,7 +51,12 @@ fn main() {
 
                         // propagate the message through the sender to receiver
                         println!("{}: {:?}", addr, msg);
-                        sender.send(msg)
+                        let mut msg_str = addr.clone().to_string().to_owned();
+                        let content_str = msg.clone().to_string().to_owned();
+                        let delim = ": ".to_owned();
+                        msg_str.push_str(&delim);
+                        msg_str.push_str(&content_str);
+                        sender.send(msg_str)
                             .expect("Failed to send the message");
                     },
                     // if there is an error susceptible to block our non-blocking socket connection

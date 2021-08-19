@@ -32,7 +32,10 @@ fn main() {
             Ok(_) => {
                 let msg = buffer.into_iter().take_while(|&x| x != 0)
                     .collect::<Vec<_>>();
-                println!("The received message is {:?}", msg);
+
+                let msg_str = String::from_utf8(msg.clone());
+
+                println!("The received message is {:?}\n=>{:?}", msg, msg_str);
             },
             // if there is an error susceptible to block our non-blocking socket connection
             // then just retry to capture messages from the current client
