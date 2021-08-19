@@ -2,13 +2,15 @@ use std::io::{ErrorKind, Read, Write};
 use std::net::TcpListener;
 use std::sync::mpsc;
 use std::thread;
+use std::time::Duration;
 
 
 const LOCAL: &str = "127.0.0.1:6000";
 const MSG_DIM: usize = 32;
 
+// pause the current thread
 fn sleep() {
-    thread::sleep(::std::time::Duration::from_millis(100));
+    thread::sleep(Duration::from_millis(100));
 }
 
 fn main() {
@@ -78,7 +80,7 @@ fn main() {
                 // complete those remained characters up to MSG_DIM with zeros
                 buffer.resize(MSG_DIM, 0);
 
-                // write message to a client instance
+                // write message to a client(socket) instance
                 client.write_all(&buffer).map(|_| client).ok()
             }).collect::<Vec<_>>();
         }
