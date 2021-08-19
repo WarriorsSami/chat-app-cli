@@ -22,7 +22,7 @@ fn main() {
         .expect("Failed to initialize non-blocking");
 
     // set an async channel for our process
-    let (_sender, receiver) = mpsc::channel::<String>();
+    let (sender, receiver) = mpsc::channel::<String>();
 
     // initialize a channel to send our client messages
     thread::spawn(move || loop {
@@ -68,4 +68,19 @@ fn main() {
         // pause thread while being inactive
         sleep();
     });
+
+    // Add interactivity support for users
+    println!("Write a message");
+    loop {
+        // read messages from stdin to buffer
+        let mut buffer = String::new();
+        io::stdin().read_line(&mut buffer)
+            .expect("Failed to read from stdin");
+
+        // convert our buffer into a message
+        let msg = buffer.trim().to_string();
+        // and try to send it to our sever (or exit at user's demand)
+        if msg == ":quit" || msg == ":q" || sender.send(msg).is_err() {break}
+    }
+    println!("Bye bye!");
 }
