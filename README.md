@@ -3,4 +3,4 @@ Basic Chat App designed for CLI in Rustlang and, respectively, Golang (the forme
 
 
 ### CLI Chat App - Rustlang implementation
-![rust-gif](https://im2.ezgif.com/tmp/ezgif-2-528c0c4e417a.gif)
+![rust-gif](https://github.com/WarriorsSami/chat-app-cli/blob/master/rustlang/assets/cli-chat-app.gif)
