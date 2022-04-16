@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aeb00ae9-1642-482b-921a-8b2bc4865436" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proto/service.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +76,7 @@
       <updated>1650131235790</updated>
       <workItem from="1650131237795" duration="784000" />
       <workItem from="1650132063525" duration="594000" />
-      <workItem from="1650134173887" duration="8665000" />
+      <workItem from="1650134173887" duration="9622000" />
     </task>
     <servers />
   </component>
